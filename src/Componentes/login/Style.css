@@ -1,0 +1,42 @@
+/* login & registro */
+.login-container {
+  max-width: 400px;
+  margin: 0 auto;
+  padding: 20px;
+  border: 2px solid #ddd;
+  border-radius: 10px;
+  background: #f2f2f2;
+  margin-top: 20px;
+}
+
+.auth-form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.auth-form input {
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid #999;
+}
+
+.auth-btn {
+  padding: 10px;
+  background-color: #0077cc;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.auth-btn.logout {
+  background-color: crimson;
+}
+
+.switch-mode {
+  color: #0077cc;
+  cursor: pointer;
+  font-size: 0.9rem;
+  text-align: center;
+}
