@@ -3,26 +3,26 @@ import React, { useState } from "react";
 export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [message, setMessage] = useState("");
+  const [mensaje, setMensaje] = useState("");
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    // Aquí podrías agregar lógica real de autenticación
-    if (email === "user@example.com" && password === "123456") {
-      setMessage("Login exitoso!");
+    // Simulación simple de autenticación
+    if (email === "usuario@ejemplo.com" && password === "123456") {
+      setMensaje("¡Ingreso exitoso!");
     } else {
-      setMessage("Credenciales incorrectas");
+      setMensaje("Credenciales incorrectas");
     }
   };
 
   return (
     <div style={{ maxWidth: 400, margin: "auto" }}>
-      <h2>Login</h2>
+      <h2>Iniciar sesión</h2>
       <form onSubmit={handleSubmit}>
         <div style={{ marginBottom: 10 }}>
           <label>
-            Email:
+            Correo electrónico:
             <input
               type="email"
               value={email}
@@ -34,7 +34,7 @@ export default function Login() {
         </div>
         <div style={{ marginBottom: 10 }}>
           <label>
-            Password:
+            Contraseña:
             <input
               type="password"
               value={password}
@@ -48,7 +48,7 @@ export default function Login() {
           Entrar
         </button>
       </form>
-      {message && <p style={{ marginTop: 10 }}>{message}</p>}
+      {mensaje && <p style={{ marginTop: 10 }}>{mensaje}</p>}
     </div>
   );
 }

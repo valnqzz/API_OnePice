@@ -1,31 +1,35 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
-import "./Style.css";
+import { useNavigate } from "react-router-dom";
 
 export default function FruitsList() {
   const [fruits, setFruits] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const navigate = useNavigate();
 
   useEffect(() => {
     fetch("https://api.api-onepiece.com/v2/fruits/en")
       .then((res) => res.json())
-      .then((data) => {
-        setFruits(data);
-        setLoading(false);
-      })
-      .catch(() => setLoading(false));
+      .then((data) => setFruits(data));
   }, []);
 
-  if (loading) return <p className="loading">Loading fruits...</p>;
-  if (!fruits.length) return <p>No fruits found.</p>;
+  if (fruits.length === 0) return <p>Cargando frutas...</p>;
 
   return (
-    <div className="fruits-list">
-      <h2>Devil Fruits List</h2>
-      <ul>
+    <div>
+      <h1>Devil Fruits</h1>
+      <ul style={{ listStyle: "none", padding: 0 }}>
         {fruits.map((fruit) => (
-          <li key={fruit.id}>
-            <Link to={`/fruits/${fruit.id}`}>{fruit.name}</Link>
+          <li
+            key={fruit.id}
+            style={{
+              cursor: "pointer",
+              padding: "8px",
+              margin: "5px 0",
+              border: "1px solid #ddd",
+              borderRadius: "5px",
+            }}
+            onClick={() => navigate(`/fruits/${fruit.id}`)}
+          >
+            {fruit.name}
           </li>
         ))}
       </ul>

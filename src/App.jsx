@@ -1,6 +1,7 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 import Login from "./Componentes/login/Index";
+import Registro from "./Componentes/registro/Index";
 import Favoritos from "./Componentes/favoritos/Index";
 import Compare from "./Componentes/compare/Index";
 
@@ -21,6 +22,7 @@ export default function App() {
         <Route path="/favoritos" element={<Favoritos />} />
         <Route path="/compare" element={<Compare />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/registro" element={<Registro />} />
       </Routes>
     </Router>
   );
