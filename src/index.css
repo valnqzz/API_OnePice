@@ -1,68 +1,75 @@
-:root {
-  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
-  font-weight: 400;
+// src/index.jsx
+import { useEffect, useState } from 'react';
+import { db, auth } from './firebase';
+import { collection, addDoc, getDocs, query, where } from 'firebase/firestore';
+import { onAuthStateChanged } from 'firebase/auth';
+import './style.css';
 
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
+function Favorites() {
+  const [fruits, setFruits] = useState([]);
+  const [user, setUser] = useState(null);
+  const [favorites, setFavorites] = useState([]);
 
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  useEffect(() => {
+    fetch('https://api.api-onepiece.com/v2/fruits/en')
+      .then(res => res.json())
+      .then(data => setFruits(data));
+  }, []);
+
+  useEffect(() => {
+    onAuthStateChanged(auth, currentUser => {
+      setUser(currentUser);
+      if (currentUser) {
+        loadFavorites(currentUser.uid);
+      }
+    });
+  }, []);
+
+  const loadFavorites = async (uid) => {
+    const q = query(collection(db, 'favorites'), where('uid', '==', uid));
+    const querySnapshot = await getDocs(q);
+    const favs = querySnapshot.docs.map(doc => doc.data().fruitId);
+    setFavorites(favs);
+  };
+
+  const addToFavorites = async (fruitId) => {
+    if (!user) {
+      alert('Inicia sesión para agregar a favoritos');
+      return;
+    }
+
+    if (favorites.includes(fruitId)) {
+      alert('Ya está en favoritos');
+      return;
+    }
+
+    await addDoc(collection(db, 'favorites'), {
+      uid: user.uid,
+      fruitId,
+    });
+
+    setFavorites(prev => [...prev, fruitId]);
+  };
+
+  return (
+    <div className="favorites-container">
+      <h1 className="title">Frutas del Diablo</h1>
+      <ul className="fruit-list">
+        {fruits.map(fruit => (
+          <li key={fruit.id} className="fruit-item">
+            <h2 className="fruit-name">{fruit.name}</h2>
+            <p className="fruit-type">{fruit.type}</p>
+            <button
+              className={`favorite-btn ${favorites.includes(fruit.id) ? 'added' : ''}`}
+              onClick={() => addToFavorites(fruit.id)}
+            >
+              {favorites.includes(fruit.id) ? '❤️ En favoritos' : '🤍 Agregar a favoritos'}
+            </button>
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
 }
 
-a {
-  font-weight: 500;
-  color: #646cff;
-  text-decoration: inherit;
-}
-a:hover {
-  color: #535bf2;
-}
-
-body {
-  margin: 0;
-  display: flex;
-  place-items: center;
-  min-width: 320px;
-  min-height: 100vh;
-}
-
-h1 {
-  font-size: 3.2em;
-  line-height: 1.1;
-}
-
-button {
-  border-radius: 8px;
-  border: 1px solid transparent;
-  padding: 0.6em 1.2em;
-  font-size: 1em;
-  font-weight: 500;
-  font-family: inherit;
-  background-color: #1a1a1a;
-  cursor: pointer;
-  transition: border-color 0.25s;
-}
-button:hover {
-  border-color: #646cff;
-}
-button:focus,
-button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
-}
-
-@media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
-  }
-  a:hover {
-    color: #747bff;
-  }
-  button {
-    background-color: #f9f9f9;
-  }
-}
+export default Favorites;

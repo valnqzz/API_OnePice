@@ -1,33 +1,40 @@
-/* login & registro */
+/* Estilos para login y registro */
 .login-container {
   max-width: 400px;
-  margin: 0 auto;
+  margin: 30px auto;
   padding: 20px;
-  border: 2px solid #ddd;
+  border: 2px solid #ccc;
   border-radius: 10px;
-  background: #f2f2f2;
-  margin-top: 20px;
+  background: #f7f7f7;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
 }
 
 .auth-form {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 12px;
 }
 
 .auth-form input {
   padding: 10px;
-  border-radius: 5px;
+  font-size: 1rem;
+  border-radius: 6px;
   border: 1px solid #999;
 }
 
 .auth-btn {
   padding: 10px;
+  font-size: 1rem;
   background-color: #0077cc;
   color: white;
   border: none;
-  border-radius: 5px;
+  border-radius: 6px;
   cursor: pointer;
+  transition: 0.3s;
+}
+
+.auth-btn:hover {
+  background-color: #005fa3;
 }
 
 .auth-btn.logout {
@@ -35,8 +42,9 @@
 }
 
 .switch-mode {
+  text-align: center;
   color: #0077cc;
   cursor: pointer;
   font-size: 0.9rem;
-  text-align: center;
+  text-decoration: underline;
 }

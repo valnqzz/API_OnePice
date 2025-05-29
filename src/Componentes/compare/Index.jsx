@@ -1,57 +1,74 @@
-// src/Compare.jsx
-import { useEffect, useState } from 'react';
-import './style.css';
+import React, { useState, useEffect } from "react";
+import "./Style.css";
 
-function Compare() {
-  const [fruits, setFruits] = useState([]);
-  const [selected1, setSelected1] = useState('');
-  const [selected2, setSelected2] = useState('');
+export default function Compare() {
+  const [frutas, setFrutas] = useState([]);
+  const [fruta1, setFruta1] = useState(null);
+  const [fruta2, setFruta2] = useState(null);
+  const [cargando, setCargando] = useState(true);
 
   useEffect(() => {
-    fetch('https://api.api-onepiece.com/v2/fruits/en')
-      .then(res => res.json())
-      .then(data => setFruits(data));
+    fetch("https://api.api-onepiece.com/v2/fruits/en")
+      .then((res) => res.json())
+      .then((data) => {
+        setFrutas(data);
+        setCargando(false);
+      })
+      .catch((err) => {
+        console.error("Error cargando frutas:", err);
+        setCargando(false);
+      });
   }, []);
 
-  const fruit1 = fruits.find(fruit => fruit.id === selected1);
-  const fruit2 = fruits.find(fruit => fruit.id === selected2);
+  if (cargando) {
+    return <div className="loading">Cargando frutas...</div>;
+  }
 
   return (
     <div className="compare-container">
-      <h2 className="compare-title">Comparador de Frutas del Diablo</h2>
+      <h2 className="compare-title">Comparar Frutas del Diablo</h2>
+      
       <div className="selectors">
-        <select value={selected1} onChange={(e) => setSelected1(e.target.value)}>
-          <option value="">Selecciona Fruta 1</option>
-          {fruits.map(fruit => (
-            <option key={fruit.id} value={fruit.id}>{fruit.name}</option>
+        <select 
+          onChange={(e) => setFruta1(frutas.find(f => f.id == e.target.value))}
+          value={fruta1?.id || ""}
+        >
+          <option value="">Selecciona primera fruta</option>
+          {frutas.map(fruta => (
+            <option key={fruta.id} value={fruta.id}>{fruta.name}</option>
           ))}
         </select>
-        <select value={selected2} onChange={(e) => setSelected2(e.target.value)}>
-          <option value="">Selecciona Fruta 2</option>
-          {fruits.map(fruit => (
-            <option key={fruit.id} value={fruit.id}>{fruit.name}</option>
+
+        <select 
+          onChange={(e) => setFruta2(frutas.find(f => f.id == e.target.value))}
+          value={fruta2?.id || ""}
+        >
+          <option value="">Selecciona segunda fruta</option>
+          {frutas.map(fruta => (
+            <option key={fruta.id} value={fruta.id}>{fruta.name}</option>
           ))}
         </select>
       </div>
 
-      <div className="comparison">
-        {fruit1 && fruit2 && (
+      {fruta1 && fruta2 && (
+        <div className="comparison">
           <div className="fruit-comparison">
             <div className="fruit-card">
-              <h3>{fruit1.name}</h3>
-              <p><strong>Tipo:</strong> {fruit1.type}</p>
-              <p>{fruit1.description}</p>
+              <h3>{fruta1.name}</h3>
+              <img src={fruta1.image} alt={fruta1.name} />
+              <p><strong>Tipo:</strong> {fruta1.type}</p>
+              <p><strong>Descripción:</strong> {fruta1.description}</p>
             </div>
+
             <div className="fruit-card">
-              <h3>{fruit2.name}</h3>
-              <p><strong>Tipo:</strong> {fruit2.type}</p>
-              <p>{fruit2.description}</p>
+              <h3>{fruta2.name}</h3>
+              <img src={fruta2.image} alt={fruta2.name} />
+              <p><strong>Tipo:</strong> {fruta2.type}</p>
+              <p><strong>Descripción:</strong> {fruta2.description}</p>
             </div>
           </div>
-        )}
-      </div>
+        </div>
+      )}
     </div>
   );
 }
-
-export default Compare;

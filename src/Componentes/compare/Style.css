@@ -1,26 +1,47 @@
 .compare-container {
-  margin-top: 40px;
+  margin: 40px auto;
   padding: 20px;
   background: #eef2f7;
   border-radius: 10px;
+  max-width: 800px;
 }
 
 .compare-title {
   font-size: 1.5rem;
-  margin-bottom: 16px;
+  margin-bottom: 20px;
   text-align: center;
+  color: #333;
+}
+
+.loading {
+  text-align: center;
+  font-size: 1.2rem;
+  color: #666;
+  margin: 50px 0;
 }
 
 .selectors {
   display: flex;
   gap: 20px;
   justify-content: center;
-  margin-bottom: 20px;
+  margin-bottom: 30px;
+  flex-wrap: wrap;
 }
 
 .selectors select {
-  padding: 10px;
+  padding: 12px;
   font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background: white;
+  min-width: 200px;
+  cursor: pointer;
+}
+
+.selectors select:focus {
+  outline: none;
+  border-color: #457b9d;
+  box-shadow: 0 0 5px rgba(69, 123, 157, 0.3);
 }
 
 .comparison {
@@ -30,14 +51,77 @@
 
 .fruit-comparison {
   display: flex;
-  gap: 20px;
+  gap: 30px;
+  flex-wrap: wrap;
+  justify-content: center;
 }
 
 .fruit-card {
   background: white;
-  border: 1px solid #ccc;
+  border: 1px solid #ddd;
   border-radius: 12px;
-  padding: 16px;
-  width: 250px;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  width: 280px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  transition: transform 0.2s ease;
+}
+
+.fruit-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+.fruit-card h3 {
+  margin-bottom: 15px;
+  color: #333;
+  font-size: 1.3rem;
+  font-weight: 600;
+}
+
+.fruit-card img {
+  width: 100%;
+  max-width: 200px;
+  height: auto;
+  border-radius: 8px;
+  margin-bottom: 15px;
+}
+
+.fruit-card p {
+  margin: 10px 0;
+  line-height: 1.5;
+  color: #555;
+  text-align: left;
+}
+
+.fruit-card p strong {
+  color: #333;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .compare-container {
+    margin: 20px;
+    padding: 15px;
+  }
+  
+  .selectors {
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .selectors select {
+    width: 100%;
+    max-width: 300px;
+  }
+  
+  .fruit-comparison {
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .fruit-card {
+    width: 100%;
+    max-width: 300px;
+  }
 }

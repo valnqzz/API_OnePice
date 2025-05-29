@@ -1,0 +1,77 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+
+.nav {
+  font-family: 'Roboto', sans-serif;
+  background: linear-gradient(90deg, #0f2027, #203a43, #2c5364);
+  padding: 15px 40px;
+  display: flex;
+  justify-content: center;
+  gap: 40px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+.nav-link {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #e0e0e0;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 18px;
+  padding: 8px 0;
+  transition: color 0.3s ease;
+  cursor: pointer;
+  position: relative;
+}
+
+.nav-icon {
+  width: 22px;
+  height: 22px;
+  object-fit: contain;
+  filter: brightness(0) invert(1);
+  transition: filter 0.3s ease;
+}
+
+.nav-link:hover .nav-icon,
+.nav-link.active .nav-icon {
+  filter: brightness(1) invert(0) drop-shadow(0 0 3px #ffab00);
+}
+
+/* Subrayado animado */
+.nav-link::after {
+  content: '';
+  position: absolute;
+  width: 0;
+  height: 3px;
+  left: 0;
+  bottom: -5px;
+  background-color: #ffab00;
+  transition: width 0.3s ease;
+  border-radius: 2px;
+}
+
+.nav-link:hover::after,
+.nav-link.active::after {
+  width: 100%;
+}
+
+.nav-link:hover,
+.nav-link.active {
+  color: #ffab00;
+  text-shadow: 0 0 8px #ffab00aa;
+}
+
+@media (max-width: 600px) {
+  .nav {
+    gap: 20px;
+    padding: 12px 20px;
+  }
+
+  .nav-link {
+    font-size: 16px;
+    padding: 6px 0;
+  }
+}
